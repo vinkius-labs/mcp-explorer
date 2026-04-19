@@ -58,12 +58,11 @@ pub fn run() {
             {
                 let handle = app.handle().clone();
                 app.listen("deep-link://new-url", move |event| {
-                    if let Some(urls) = event.payload().as_ref() {
-                        // payload is a JSON array of strings
-                        if let Ok(parsed) = serde_json::from_str::<Vec<String>>(urls) {
-                            if let Some(url) = parsed.into_iter().find(|u| u.starts_with("vinkius://")) {
-                                handle_deep_link(&handle, url);
-                            }
+                    let payload = event.payload();
+                    // payload is a JSON array of strings
+                    if let Ok(parsed) = serde_json::from_str::<Vec<String>>(payload) {
+                        if let Some(url) = parsed.into_iter().find(|u| u.starts_with("vinkius://")) {
+                            handle_deep_link(&handle, url);
                         }
                     }
                 });
