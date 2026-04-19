@@ -5,7 +5,7 @@ mod http;
 mod tray;
 
 use commands::auth::AuthState;
-use tauri::{Emitter, Manager};
+use tauri::{Emitter, Manager, Listener};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
